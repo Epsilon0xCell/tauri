@@ -34,9 +34,8 @@ pub fn target_triple() -> Result<String, crate::Error> {
     return Err(crate::Error::from("Unable to determine target-os"));
   };
 
-  let s;
   let os = if cfg!(target_os = "macos") || cfg!(target_os = "freebsd") {
-    os
+    String::from(os)
   } else {
     let env = if cfg!(target_env = "gnu") {
       "gnu"
@@ -47,8 +46,8 @@ pub fn target_triple() -> Result<String, crate::Error> {
     } else {
       return Err(crate::Error::from("Unable to determine target-environment"));
     };
-    s = format!("{}-{}", os, env);
-    &s
+
+    format!("{}-{}", os, env)
   };
 
   Ok(format!("{}-{}", arch, os))
